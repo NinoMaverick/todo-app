@@ -9,6 +9,16 @@ router.post("/signup", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
+    // Validaton: Ensure required fields are provided
+    if (!username || !email || !password) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    // Validation: Ensure password is at least 6 characters
+    if (password.length < 6) {
+      return res.status(400).json({ error: "Password must be at least 6 characters long" });
+    }
+
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -52,6 +62,6 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.statusCode("500").json({ error: "Login failed" });
   }
-})
+});
 
 module.exports = router;

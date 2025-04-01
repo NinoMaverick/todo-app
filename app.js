@@ -4,7 +4,8 @@ const morgan = require("morgan"); // For logging requests
 // const helmet = require('helmet'); // Security middleware
 const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/authRoutes");
-// const taskRoutes = require('./routes/taskRoutes');
+const todoRoutes = require('./routes/todoRoutes');
+const errorHandler = require("./utils/errorHandler");
 
 // Initialize Express app
 const app = express();
@@ -17,11 +18,14 @@ app.use(cookieParser());
 
 // Routes
 app.use('/api/auth', authRoutes);
-// app.use('/api/tasks', taskRoutes);
+app.use('/api/todos', todoRoutes);
 
 // Test route
 app.get("/", (req, res) => {
-    res.send("Welcome to the To-Do App API 🚀");
-  });
+  res.send("Welcome to the To-Do App API 🚀");
+});
+
+// Global error handling middleware (MUST be after all routes)
+app.use(errorHandler);
 
 module.exports = app;
