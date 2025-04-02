@@ -10,8 +10,15 @@ const todoSchema = new mongoose.Schema({
 
 // 🔹 Create a new task
 todoSchema.statics.createTodo = async function (text, userId) {
-  return await this.create({ text, user: userId });
+  try {
+    const todo = await this.create({ text, user: userId });
+    return todo;
+  } catch (error) {
+    console.error("Error in createTodo method:", error);
+    throw error;  // throw error so the global handler catches it
+  }
 };
+
 
 // 🔹 Get all tasks for a user
 todoSchema.statics.getTodosByUser = async function (userId) {

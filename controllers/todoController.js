@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 // Create a new todo
 exports.createTodo = async (req, res) => {
   try {
+
     const { text } = req.body;   // Extract "text" from request body
     const userId = req.user.id;  // Get the authenticated user's ID from JWT
-
 
     if (!text) {
       return res.status(400).json({ message: "Text is required" }); 
@@ -18,7 +18,7 @@ exports.createTodo = async (req, res) => {
     }
 
     // Call the Model to handle the actual creation
-    const newTodo = await Todo.createTodo({ text, user: userId }); 
+    const newTodo = await Todo.createTodo(text, userId); 
     res.status(201).json(newTodo);
   } catch (error) {
     res.status(400).json({ message: error.message });
