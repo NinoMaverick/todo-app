@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const todoController = require('../controllers/todoController');
-const authMiddleware = require('../utils/authMiddleware'); // Protect routes
+const authController = require('../controllers/authController');
 
-router.post('/', authMiddleware, todoController.createTodo);
-router.get('/', authMiddleware, todoController.getTodos);
-router.put('/:id', authMiddleware, todoController.updateTodo);
-router.delete('/:id', authMiddleware, todoController.deleteTodo);
+// Protecting routes with authMiddleware
+router.post('/', authController.protect, todoController.createTodo);
+router.get('/', authController.protect, todoController.getTodos);
+router.put('/:id', authController.protect, todoController.updateTodo);
+router.delete('/:id', authController.protect, todoController.deleteTodo);
 
 module.exports = router;

@@ -8,7 +8,7 @@ const todoSchema = new mongoose.Schema({
 { timestamps: true}
 );
 
-// 🔹 Create a new task
+// Create a new task
 todoSchema.statics.createTodo = async function (text, userId) {
   try {
     const todo = await this.create({ text, user: userId });
@@ -19,13 +19,12 @@ todoSchema.statics.createTodo = async function (text, userId) {
   }
 };
 
-
-// 🔹 Get all tasks for a user
+// Get all tasks for a user
 todoSchema.statics.getTodosByUser = async function (userId) {
   return await this.find({ user: userId });
 };
 
-// 🔹 Update a task (ensures ownership)
+// Update a task (ensures ownership)
 todoSchema.statics.updateTodoIfOwner = async function (todoId, userId, updateData) {
   const todo = await this.findOneAndUpdate(
     { _id: todoId, user: userId }, // Ensure user owns the task
@@ -38,7 +37,7 @@ todoSchema.statics.updateTodoIfOwner = async function (todoId, userId, updateDat
   return todo;
 };
 
-// 🔹 Delete a task (ensures ownership)
+// Delete a task (ensures ownership)
 todoSchema.statics.deleteIfOwner = async function (todoId, userId) {
   const todo = await this.findById(todoId);
   if (!todo) throw new Error("Task not found");
