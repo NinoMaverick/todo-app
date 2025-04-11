@@ -123,8 +123,6 @@ This app was created as a practical milestone to solidify backend development sk
 - Rate limiting & input sanitization
 
 
-✅ Proof of Execution
-
-This project was built to prove I finish what I start.  
+  
 
 
